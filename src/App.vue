@@ -9,11 +9,10 @@
        Job App
       </span>
 
-      <v-spacer></v-spacer>
+      <v-spacer />
 
       <v-btn
-        href=""
-        target="_blank"
+      @click="$router.push({ name: 'main' })"
         text
         class="mr-2"
       >

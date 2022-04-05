@@ -10,7 +10,7 @@
         color="green"
       >
         <v-list-item
-          v-for="(item, i) in items"
+          v-for="(item, i) in jobsList"
           :key="i"
         >
           <v-list-item-content @click="$router.push({ name: 'vacancy', params: { slug: item.slug } })">
@@ -23,20 +23,18 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+
 export default {
-    data: () => ({
-    items: [],
+  data: () => ({
     selectedItem: {}
   }),
-  created() {
-      this.getJobs();
-  },
   methods: {
-      async getJobs() {
-        fetch('https://www.arbeitnow.com/api/job-board-api')
-          .then(response => response.json())
-          .then(data => this.items = data.data)
-      },
+    ...mapActions(["getJobsList"])
+  },
+  computed: mapGetters(["jobsList"]),
+  created() {
+    this.getJobsList()
   }
 }
 </script>

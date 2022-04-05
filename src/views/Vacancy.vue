@@ -4,7 +4,7 @@
     <v-card-text>
         <div>
             <span>Company name: </span>
-            {{ vacancy.company_name }}
+            {{ vacancy.companyName }}
         </div>
         <div>
             <span>Job description: </span>
@@ -12,7 +12,7 @@
         </div>
          <div>
             <span>Job description: </span>
-            <v-chip v-for="(type, index) in vacancy.job_types"
+            <v-chip v-for="(type, index) in vacancy.jobTypes"
             :key="index"
             class="ma-2"
             color="green"
@@ -44,9 +44,9 @@
     <v-card-actions>
     <v-btn @click="$router.go(-1)">Go back</v-btn>
      <v-btn
-        href="vacancy.url"
+        :href="vacancy.url"
         target="_blank"
-        text
+        link
         class="mr-2"
       >
         Go to the company site
@@ -56,10 +56,18 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 export default {
     props: {
-        slug: String,
-        vacancy: Object
+        slug: String
+    },
+    methods: {
+        ...mapActions(["getVacancy"])
+    },
+    computed: mapGetters(["vacancy"]),
+    created() {
+        this.getVacancy(this.slug)
     }
+
 }
 </script>
