@@ -6,7 +6,10 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
     state: {
         jobsList: [],
-        vacancy: {}
+        vacancy: {},
+        filteredJobsList: [],
+        cities: [],
+        tags: []
     },
     getters: {
         jobsList(state) {
@@ -14,7 +17,16 @@ const store = new Vuex.Store({
         },
         vacancy(state) {
             return state.vacancy;
-        }
+        },
+        cities(state) {
+            return state.cities;
+        },
+        tags(state) {
+            return state.tags;
+        },
+        filteredJobsList(state) {
+            return state.filteredJobsList;
+        },
     },
     mutations: {
         setJobsList(state, items) {
@@ -23,9 +35,18 @@ const store = new Vuex.Store({
         setVacancy(state, vacancy) {
             state.vacancy = vacancy;
         },
+        setCities(state, cities) {
+            state.cities = cities;
+        },
+        setTags(state, tags) {
+            state.tags = tags;
+        },
+        setFilteredJobsList(state, items) {
+            state.filteredJobsList = items;
+        }
     },
     actions: {
-        getJobsList({ commit }) {
+        getJobsList({ commit, dispatch }) {
             fetch('https://www.arbeitnow.com/api/job-board-api')
                 .then(response => response.json())
                 .then(jobs => {
@@ -44,11 +65,54 @@ const store = new Vuex.Store({
                         }
                     })
                     commit('setJobsList', list)
+                    commit('setFilteredJobsList', list)
+                    dispatch('getCitiesList')
+                    dispatch('getTagsList')
                 })
         },
         getVacancy({ commit }, slug) {
             const job =  this.state.jobsList.find(j => j.slug === slug)
             commit('setVacancy', job)
+        },
+        getCitiesList({ commit }) {
+            const allList = this.state.jobsList.map(j => j.location);
+            const uniqList = [...new Set(allList)];
+            const list = uniqList.sort()
+            commit('setCities',  list)
+        },
+        getTagsList({ commit }) {
+            let allList = []
+            this.state.jobsList.forEach(j => allList = [...j.tags, ...allList]);
+            const uniqList = [...new Set(allList)];
+            const list = uniqList.sort()
+            commit('setTags',  list)
+        },
+        getFilteredJobsList({ commit }, filter) {
+            let list = this.state.jobsList;
+
+            if (filter.remote && filter.remote.text) {
+                list = list.filter(l => l.remote === filter.remote.value)
+            }
+
+            if (filter.city && filter.city.length > 0) {
+                list = list.reduce((list, job) => {
+                    if (filter.city.find(c => c === job.location)) {
+                        list.push(job)
+                    }
+                    return list
+                }, [])
+            }
+
+            if(filter.tag && filter.tag.length > 0) {
+                list = list.reduce((list, job) => {
+                    if(filter.tag.some(tag => job.tags.includes(tag))) {
+                        list.push(job)
+                    }
+                    return list
+                }, [])
+            }
+
+            commit('setFilteredJobsList', [...new Set(list)])
         }
     }
 });
