@@ -103,9 +103,9 @@ const store = new Vuex.Store({
                 }, [])
             }
 
-            if(filter.tag && filter.tag.length > 0) {
+            if (filter.tag && filter.tag.length > 0) {
                 list = list.reduce((list, job) => {
-                    if(filter.tag.some(tag => job.tags.includes(tag))) {
+                    if (filter.tag.some(tag => job.tags.includes(tag))) {
                         list.push(job)
                     }
                     return list

@@ -10,8 +10,8 @@
             <span>Job description: </span>
             <span v-html="vacancy.description"/>
         </div>
-         <div>
-            <span>Job description: </span>
+         <div v-if="vacancy.jobTypes > 0">
+            <span>Job types: </span>
             <v-chip v-for="(type, index) in vacancy.jobTypes"
             :key="index"
             class="ma-2"
