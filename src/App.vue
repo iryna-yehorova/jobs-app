@@ -15,26 +15,21 @@
         href=""
         target="_blank"
         text
+        class="mr-2"
       >
-        <span class="mr-2">Arbeit now</span>
+        Arbeit now
       </v-btn>
     </v-app-bar>
 
     <v-main>
-      <Main />
+     <router-view />
     </v-main>
   </v-app>
 </template>
 
 <script>
-import Main from './views/Main';
-
 export default {
   name: 'App',
-
-  components: {
-    Main,
-  },
 
   data: () => ({
     //

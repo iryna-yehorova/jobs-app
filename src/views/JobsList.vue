@@ -13,7 +13,7 @@
           v-for="(item, i) in items"
           :key="i"
         >
-          <v-list-item-content>
+          <v-list-item-content @click="$router.push({ name: 'vacancy', params: { slug: item.slug } })">
             <v-list-item-title v-text="item.title"></v-list-item-title>
           </v-list-item-content>
         </v-list-item>
