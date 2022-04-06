@@ -32,23 +32,34 @@
         multiple
         clearable
       />
-    </v-card>
-    <v-list shaped>
-      <v-subheader>Job Applications</v-subheader>
-      <v-list-item-group
-        v-model="selectedItem"
-        color="green"
-      >
+    </v-card> 
+    <v-virtual-scroll
+      :items="filteredJobsList"
+      :height="listHeight"
+      item-height="64"
+    >
+      <template v-slot:default="{ item }">
+        <v-list-item-group
+         v-model="selectedItem"
+        >
         <v-list-item
-          v-for="(item, i) in filteredJobsList"
-          :key="i"
+          :key="item.slug"
         >
           <v-list-item-content @click="$router.push({ name: 'vacancy', params: { slug: item.slug } })">
             <v-list-item-title v-text="item.title"></v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-      </v-list-item-group>
-    </v-list>
+         </v-list-item-group>
+      </template>
+    </v-virtual-scroll>
+
+    <div class="text-center">
+      <v-pagination
+        v-model="page"
+        :length="6"
+        color="green"
+      />
+    </div>
   </v-card>
 </template>
 
@@ -67,15 +78,19 @@ export default {
       city: [],
       tag: []
     },
+    page: 1,
   }),
   methods: {
     ...mapActions(["getJobsList", "getFilteredJobsList"]),
   },
   computed: {
     ...mapGetters(["filteredJobsList", "cities", "tags"]),
+    listHeight() {
+      return window.innerHeight - 275;
+    }
   },
   created() {
-    this.getJobsList()
+    this.getJobsList(this.page)
   },
   watch: {
     filter: {
@@ -83,6 +98,11 @@ export default {
         this.getFilteredJobsList(val)
       },
       deep: true
+    },
+    page: {
+      handler(val) {
+        this.getJobsList(val)
+      }
     }
   },
 }

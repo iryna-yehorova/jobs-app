@@ -46,8 +46,8 @@ const store = new Vuex.Store({
         }
     },
     actions: {
-        getJobsList({ commit, dispatch }) {
-            fetch('https://www.arbeitnow.com/api/job-board-api')
+        getJobsList({ commit, dispatch }, page) {
+            fetch(`https://www.arbeitnow.com/api/job-board-api?page=${page}`)
                 .then(response => response.json())
                 .then(jobs => {
                     const list = jobs.data.map(j => {
