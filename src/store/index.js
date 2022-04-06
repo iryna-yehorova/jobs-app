@@ -64,8 +64,8 @@ const store = new Vuex.Store({
                             createdAt: j.created_at
                         }
                     })
-                    commit('setJobsList', list)
-                    commit('setFilteredJobsList', list)
+                    commit('setJobsList', [...this.state.jobsList, ...list])
+                    commit('setFilteredJobsList', [...this.state.jobsList, ...list])
                     dispatch('getCitiesList')
                     dispatch('getTagsList')
                 })
