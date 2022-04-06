@@ -1,41 +1,40 @@
 <template>
 <v-card class="ma-2">
-    <v-card-title> {{ vacancy.title }} </v-card-title>
+    <v-card-title class="font-weight-bold"> {{ vacancy.title }} </v-card-title>
     <v-card-text>
-        <div>
-            <span>Company name: </span>
+        <div class="body-1">
+            <span class="subtitle-1 font-weight-bold">Company name: </span>
             {{ vacancy.companyName }}
         </div>
-        <div>
-            <span>Job description: </span>
+        <div class="body-1">
             <span v-html="vacancy.description"/>
         </div>
-         <div v-if="vacancy.jobTypes > 0">
-            <span>Job types: </span>
+         <div v-if="vacancy.jobTypes.length > 0">
+            <span class="subtitle-1 font-weight-bold">Job types: </span>
             <v-chip v-for="(type, index) in vacancy.jobTypes"
-            :key="index"
-            class="ma-2"
-            color="green"
-            text-color="white"
+                :key="index"
+                class="ma-2 body-1"
+                color="green"
+                text-color="white"
             >
             {{ type }}
             </v-chip>
         </div>
         <div>
-            <span>Remote: </span>
-            <span> {{ vacancy.remote ? 'Yes' : 'No' }} </span>
+            <span class="subtitle-1 font-weight-bold">Remote: </span>
+            <span class="body-1"> {{ vacancy.remote ? 'Yes' : 'No' }} </span>
         </div>
-        <div>
-            <span>Location: </span>
+        <div class="body-1">
+            <span class="subtitle-1 font-weight-bold">Location: </span>
             {{ vacancy.location }}
         </div>
         <div>
-            <span>Tags: </span>
+            <span class="subtitle-1 font-weight-bold">Tags: </span>
             <v-chip v-for="(label, index) in vacancy.tags"
-            :key="index"
-            class="ma-2"
-            color="green"
-            text-color="white"
+                :key="index"
+                class="ma-2 body-1"
+                color="green"
+                text-color="white"
             >
             {{ label }}
             </v-chip>
@@ -47,9 +46,10 @@
         :href="vacancy.url"
         target="_blank"
         link
-        class="mr-2"
+        class="ml-2 pa-3 white--text"
+        color="green"
       >
-        Go to the company site
+        Apply
       </v-btn>
     </v-card-actions>
 </v-card>
