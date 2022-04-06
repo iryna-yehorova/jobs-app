@@ -4,15 +4,19 @@
       app
       color="green"
       dark
+      elevate-on-scroll
     >
-      <span class="d-flex align-center">
-       Job App
-      </span>
+      <v-img
+        max-width="35"
+        src="@/assets/logo.svg"
+        class="mr-2"
+      />
+     <v-toolbar-title>Job App</v-toolbar-title>
 
       <v-spacer />
 
       <v-btn
-      @click="$router.push({ name: 'main' })"
+        @click="$router.push({ name: 'main' })"
         text
         class="mr-2"
       >
@@ -21,7 +25,9 @@
     </v-app-bar>
 
     <v-main>
-     <router-view />
+      <v-container fluid>
+        <router-view />
+      </v-container>
     </v-main>
   </v-app>
 </template>
