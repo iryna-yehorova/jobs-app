@@ -14,7 +14,7 @@
                 </v-col>
                 <v-col class="pb-0">
                     <v-card outlined class="pa-3">
-                        <div>
+                        <div v-if="vacancy.jobTypes.length > 0">
                             <span class="subtitle-1 font-weight-bold">Job types: </span>
                             <v-chip v-for="(type, index) in vacancy.jobTypes"
                                 :key="index"
@@ -33,7 +33,7 @@
                             <span class="subtitle-1 font-weight-bold">Location: </span>
                             {{ vacancy.location }}
                         </div>
-                        <div>
+                        <div v-if="vacancy.tags.length > 0">
                             <span class="subtitle-1 font-weight-bold">Tags: </span>
                             <v-chip v-for="(label, index) in vacancy.tags"
                                 :key="index"
