@@ -47,7 +47,8 @@ const store = new Vuex.Store({
     },
     actions: {
         getJobsList({ commit, dispatch }, page) {
-            fetch(`https://www.arbeitnow.com/api/job-board-api?page=${page}`)
+            const url = 'https://www.arbeitnow.com/api/job-board-api?page='
+            fetch(`${url}${page}`)
                 .then(response => response.json())
                 .then(jobs => {
                     const list = jobs.data.map(j => {
@@ -64,8 +65,8 @@ const store = new Vuex.Store({
                             createdAt: j.created_at
                         }
                     })
-                    commit('setJobsList', [...this.state.jobsList, ...list])
-                    commit('setFilteredJobsList', [...this.state.jobsList, ...list])
+                    commit('setJobsList', [ ...this.state.jobsList, ...list])
+                    commit('setFilteredJobsList', [ ...this.state.jobsList, ...list])
                     dispatch('getCitiesList')
                     dispatch('getTagsList')
                 })
@@ -76,14 +77,14 @@ const store = new Vuex.Store({
         },
         getCitiesList({ commit }) {
             const allList = this.state.jobsList.map(j => j.location);
-            const uniqList = [...new Set(allList)];
+            const uniqList = [ ...new Set(allList)];
             const list = uniqList.sort()
             commit('setCities',  list)
         },
         getTagsList({ commit }) {
             let allList = []
             this.state.jobsList.forEach(j => allList = [...j.tags, ...allList]);
-            const uniqList = [...new Set(allList)];
+            const uniqList = [ ...new Set(allList)];
             const list = uniqList.sort()
             commit('setTags',  list)
         },
@@ -112,7 +113,7 @@ const store = new Vuex.Store({
                 }, [])
             }
 
-            commit('setFilteredJobsList', [...new Set(list)])
+            commit('setFilteredJobsList', [ ...new Set(list)])
         }
     }
 });

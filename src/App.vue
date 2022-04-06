@@ -11,7 +11,7 @@
         src="@/assets/logo.svg"
         class="mr-2"
       />
-     <v-toolbar-title>Job App</v-toolbar-title>
+     <v-toolbar-title>Job Vacancy App</v-toolbar-title>
 
       <v-spacer />
 
